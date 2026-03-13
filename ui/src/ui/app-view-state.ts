@@ -290,6 +290,18 @@ export type AppViewState = {
     logsLimit: number;
     logsMaxBytes: number;
     logsAtBottom: boolean;
+    // Solana DeFi dashboard state (populated via agent tool results)
+    solanaLoading?: boolean;
+    solanaError?: string | null;
+    solanaPortfolio?: import("./views/solana-dashboard.js").PortfolioData | null;
+    solanaSignals?: import("./views/solana-dashboard.js").SignalsData | null;
+    solanaGuardrails?: import("./views/solana-dashboard.js").GuardrailsData | null;
+    solanaTxHistory?: import("./views/solana-dashboard.js").TxHistoryEntry[];
+    solanaRiskAnalysis?: import("./views/solana-dashboard.js").RiskData | null;
+    solanaDcaOrders?: import("./views/solana-dashboard.js").DcaOrderData | null;
+    solanaAutopilot?: import("./views/solana-dashboard.js").AutopilotData | null;
+    solanaSniper?: import("./views/solana-dashboard.js").SniperData | null;
+    solanaWebhooks?: import("./views/solana-dashboard.js").WebhookData | null;
     updateAvailable: import("./types.js").UpdateAvailable | null;
     attentionItems: AttentionItem[];
     paletteOpen: boolean;

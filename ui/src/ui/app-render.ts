@@ -126,6 +126,7 @@ const lazyLogs = createLazy(() => import("./views/logs.ts"));
 const lazyNodes = createLazy(() => import("./views/nodes.ts"));
 const lazySessions = createLazy(() => import("./views/sessions.ts"));
 const lazySkills = createLazy(() => import("./views/skills.ts"));
+const lazySolana = createLazy(() => import("./views/solana-dashboard.ts"));
 
 function lazyRender<M>(getter: () => M | null, render: (mod: M) => unknown) {
   const mod = getter();
@@ -861,6 +862,32 @@ export function renderApp(state: AppViewState) {
                     }
                     await loadCronRuns(state, state.cronRunsJobId);
                   },
+                }),
+              )
+            : nothing
+        }
+
+        ${
+          state.tab === "solana"
+            ? lazyRender(lazySolana, (m) =>
+                m.renderSolanaDashboard({
+                  loading: state.solanaLoading ?? false,
+                  error: state.solanaError ?? null,
+                  portfolio: state.solanaPortfolio ?? null,
+                  signals: state.solanaSignals ?? null,
+                  guardrails: state.solanaGuardrails ?? null,
+                  txHistory: state.solanaTxHistory ?? [],
+                  riskAnalysis: state.solanaRiskAnalysis ?? null,
+                  dcaOrders: state.solanaDcaOrders ?? null,
+                  autopilot: state.solanaAutopilot ?? null,
+                  sniper: state.solanaSniper ?? null,
+                  webhooks: state.solanaWebhooks ?? null,
+                  onRefresh: () => {
+                    // Dispatch via chat WebSocket — the agent tool handles data
+                    state.solanaLoading = true;
+                  },
+                  onSwap: () => {},
+                  onTransfer: () => {},
                 }),
               )
             : nothing

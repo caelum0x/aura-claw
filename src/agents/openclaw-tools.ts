@@ -22,6 +22,7 @@ import { createSessionsListTool } from "./tools/sessions-list-tool.js";
 import { createSessionsSendTool } from "./tools/sessions-send-tool.js";
 import { createSessionsSpawnTool } from "./tools/sessions-spawn-tool.js";
 import { createSessionsYieldTool } from "./tools/sessions-yield-tool.js";
+import { createSolanaDefiTool } from "./tools/solana-defi-tool.js";
 import { createSubagentsTool } from "./tools/subagents-tool.js";
 import { createTtsTool } from "./tools/tts-tool.js";
 import { createWebFetchTool, createWebSearchTool } from "./tools/web-tools.js";
@@ -213,6 +214,24 @@ export function createOpenClawTools(
     ...(webFetchTool ? [webFetchTool] : []),
     ...(imageTool ? [imageTool] : []),
     ...(pdfTool ? [pdfTool] : []),
+    createSolanaDefiTool({
+      rpcUrl: options?.config?.solana?.rpcUrl ?? process.env.SOLANA_RPC_URL,
+      walletAddress: process.env.SOLANA_WALLET,
+      slippageBps:
+        options?.config?.solana?.slippageBps ?? Number(process.env.SOLANA_SLIPPAGE_BPS || "50"),
+      openRouterApiKey: options?.config?.solana?.openRouterApiKey ?? process.env.OPENROUTER_API_KEY,
+      network: options?.config?.solana?.network ?? "devnet",
+      privateKey: options?.config?.solana?.privateKey ?? process.env.SOLANA_PRIVATE_KEY,
+      maxTxAmountUsd: options?.config?.solana?.maxTxAmountUsd ?? 100,
+      dailySpendLimitUsd: options?.config?.solana?.dailySpendLimitUsd ?? 500,
+      maxTxPerHour: options?.config?.solana?.maxTxPerHour ?? 20,
+      confirmationThresholdUsd: options?.config?.solana?.confirmationThresholdUsd ?? 25,
+      recipientAllowlist: options?.config?.solana?.recipientAllowlist ?? [],
+      walletPath: options?.config?.solana?.walletPath,
+      auraMint: options?.config?.solana?.auraMint,
+      heliusApiKey: options?.config?.solana?.heliusApiKey ?? process.env.HELIUS_API_KEY,
+      coingeckoApiKey: options?.config?.solana?.coingeckoApiKey ?? process.env.COINGECKO_API_KEY,
+    }),
   ];
 
   const pluginTools = resolvePluginTools({

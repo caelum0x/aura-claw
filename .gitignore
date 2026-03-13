@@ -56,6 +56,14 @@ apps/macos/.build/**
 **/*.bun-build
 apps/ios/*.xcfilelist
 
+# Solana agent-kit packages (vendored from fork)
+packages/solana-agent-kit/
+packages/packages/
+packages/spl/
+
+# Solana programs (Anchor/Rust)
+programs/
+
 # Vendor build artifacts
 vendor/a2ui/renderers/lit/dist/
 src/canvas-host/a2ui/*.bundle.js

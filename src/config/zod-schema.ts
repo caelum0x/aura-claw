@@ -826,6 +826,27 @@ export const OpenClawSchema = z
       .strict()
       .optional(),
     memory: MemorySchema,
+    solana: z
+      .object({
+        rpcUrl: z.string().optional(),
+        walletPath: z.string().optional(),
+        network: z
+          .union([z.literal("devnet"), z.literal("testnet"), z.literal("mainnet-beta")])
+          .optional(),
+        slippageBps: z.number().int().min(0).max(10000).optional(),
+        auraMint: z.string().optional(),
+        openRouterApiKey: z.string().optional().register(sensitive),
+        heliusApiKey: z.string().optional().register(sensitive),
+        privateKey: z.string().optional().register(sensitive),
+        maxTxAmountUsd: z.number().nonnegative().optional(),
+        dailySpendLimitUsd: z.number().nonnegative().optional(),
+        maxTxPerHour: z.number().int().nonnegative().optional(),
+        confirmationThresholdUsd: z.number().nonnegative().optional(),
+        recipientAllowlist: z.array(z.string()).optional(),
+        coingeckoApiKey: z.string().optional().register(sensitive),
+      })
+      .strict()
+      .optional(),
     skills: z
       .object({
         allowBundled: z.array(z.string()).optional(),
